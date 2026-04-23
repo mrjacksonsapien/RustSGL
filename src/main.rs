@@ -1,3 +1,5 @@
+mod sgl;
+
 use std::{num::NonZeroU32, rc::Rc};
 
 use rand::random;
