@@ -41,6 +41,7 @@ struct AppState<A: SGLApp> {
     renderer: Renderer,
     current_scene: Scene,
     user_app: A,
+    title: String,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -89,7 +90,7 @@ impl<A: SGLApp> ApplicationHandler for AppState<A> {
                 .unwrap(),
         );
 
-        window.set_title("Lol");
+        window.set_title(&self.title);
 
         self.window = Some(window.clone());
 
@@ -203,7 +204,7 @@ pub struct SGLContext<A: SGLApp> {
 }
 
 impl<A: SGLApp> SGLContext<A> {
-    pub fn new(scene: Scene, user_app: A) -> Self {
+    pub fn new(scene: Scene, user_app: A, title: impl Into<String>) -> Self {
         let event_loop = EventLoop::new().unwrap();
         let renderer = Renderer::new();
 
@@ -216,6 +217,7 @@ impl<A: SGLApp> SGLContext<A> {
             renderer,
             current_scene: scene,
             user_app,
+            title: title.into(),
         };
 
         Self { event_loop, state }

@@ -19,6 +19,6 @@ fn main() {
     let scene = Scene::new();
     let app = App {};
 
-    let context = SGLContext::new(scene, app);
+    let context = SGLContext::new(scene, app, "SGL");
     context.run();
 }
