@@ -1,17 +1,35 @@
-pub const RED: Color = Color { r: 255, g: 0, b: 0 };
-pub const GREEN: Color = Color { r: 0, g: 255, b: 0 };
-pub const BLUE: Color = Color { r: 0, g: 0, b: 255 };
+pub const RED: Color = Color { r: 255, g: 0, b: 0, _a: 255 };
+pub const GREEN: Color = Color { r: 0, g: 255, b: 0, _a: 255 };
+pub const BLUE: Color = Color { r: 0, g: 0, b: 255, _a: 255 };
 
+#[derive(Debug, Clone, Copy)]
+#[repr(C, align(4))]
 pub struct Color {
     pub r: u8,
     pub g: u8,
     pub b: u8,
+    _a: u8,
 }
 
+impl Color {
+    pub fn new(r: u8, g: u8, b: u8) -> Self {
+        Self { r, g, b, _a: 255 }
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
+#[repr(C, align(16))]
 pub struct Vector3 {
     pub x: f32,
     pub y: f32,
     pub z: f32,
+    _w: f32,
+}
+
+impl Vector3 {
+    pub fn new(x: f32, y: f32, z: f32) -> Self {
+        Self { x, y, z, _w: 1.0 }
+    }
 }
 
 pub struct Transform {
@@ -25,6 +43,7 @@ pub struct Vertex {
     pub color: Color,
 }
 
+#[derive(Debug, Clone, Copy)]
 pub struct Triangle {
     pub indices: [usize; 3],
 }
@@ -41,21 +60,9 @@ impl Mesh {
             vertices,
             triangles,
             transform: Transform {
-                position: Vector3 {
-                    x: 0.0,
-                    y: 0.0,
-                    z: 0.0,
-                },
-                rotation: Vector3 {
-                    x: 0.0,
-                    y: 0.0,
-                    z: 0.0,
-                },
-                scale: Vector3 {
-                    x: 1.0,
-                    y: 1.0,
-                    z: 1.0,
-                },
+                position: Vector3::new(0.0, 0.0, 0.0),
+                rotation: Vector3::new(0.0, 0.0, 0.0),
+                scale: Vector3::new(0.0, 0.0, 0.0),
             },
         }
     }
@@ -82,7 +89,7 @@ pub struct Camera {
 }
 
 pub struct Scene {
-    meshes: Vec<Mesh>,
+    meshes: Vec<Mesh>, // TODO: Change meshes reference to flat buffers of all the data (vertex positions, vertex colors, triangles)
     current_camera: Camera,
 }
 
@@ -95,21 +102,9 @@ impl Scene {
                 far: 100.0,
                 fov: 90.0,
                 transform: Transform {
-                    position: Vector3 {
-                        x: 0.0,
-                        y: 0.0,
-                        z: 0.0,
-                    },
-                    rotation: Vector3 {
-                        x: 0.0,
-                        y: 0.0,
-                        z: 0.0,
-                    },
-                    scale: Vector3 {
-                        x: 1.0,
-                        y: 1.0,
-                        z: 1.0,
-                    },
+                    position: Vector3::new(0.0, 0.0, 0.0),
+                    rotation: Vector3::new(0.0, 0.0, 0.0),
+                    scale: Vector3::new(0.0, 0.0, 0.0),
                 },
             },
         }
