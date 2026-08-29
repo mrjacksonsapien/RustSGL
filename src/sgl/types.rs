@@ -1,6 +1,21 @@
-pub const RED: Color = Color { r: 255, g: 0, b: 0, _a: 255 };
-pub const GREEN: Color = Color { r: 0, g: 255, b: 0, _a: 255 };
-pub const BLUE: Color = Color { r: 0, g: 0, b: 255, _a: 255 };
+pub const RED: Color = Color {
+    r: 255,
+    g: 0,
+    b: 0,
+    _a: 255,
+};
+pub const GREEN: Color = Color {
+    r: 0,
+    g: 255,
+    b: 0,
+    _a: 255,
+};
+pub const BLUE: Color = Color {
+    r: 0,
+    g: 0,
+    b: 255,
+    _a: 255,
+};
 
 // TODO: Use Cell<T> to make OOP-like architecture and interface similar to original SGL
 
